@@ -1,0 +1,53 @@
+body {
+	background-image: url('images/background.jpg');
+	font-family: Verdana;
+}
+
+ul {
+	margin: 80px auto;
+	padding: 0;
+	list-style-type: none;
+	width: auto;
+	position: relative;
+	display: block;
+	height: 40px;
+	font-size: 30px;
+	font-weight: bold;
+	background-image:url('images/meniu.jpg');
+	font-family: Helvetica, Arial, Verdana, sans-serif;
+	border-bottom: 4px solid #336666;
+	border-top: 1px solid #C0E2D4;
+}
+
+a {
+	margin: 80px auto;
+	width: auto;
+	text-decoration: none;
+	color: 1D4948;
+}
+
+a:hover {
+	background-color: 4F9292;
+}
+
+li {
+	display: inline;
+	margin-left: 250px;
+}
+
+.username{
+	text-align: center;
+	color: white;
+	font-size: 30px;
+}
+.image{
+	width: 300px;
+	margin-left: 800px;
+}
+
+#groups{
+    position: relative;
+    left: 770;
+}
+
+

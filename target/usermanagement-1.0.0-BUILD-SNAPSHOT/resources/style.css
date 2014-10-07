@@ -1,0 +1,82 @@
+
+body{
+	background-image: url('images/background.jpg');
+	font-family: Verdana;
+}
+.div{
+	display: block;
+	width: 420px;
+	height: 220px;
+	
+    border: 5px solid grey;
+    border-radius: 5%;
+   
+    margin: 200px auto;
+    background-image: url('images/back.jpg');
+    text-align: center;
+    
+}
+
+input {
+	border-radius: 5%;
+	margin: 5px;
+	padding: 7px;
+	width: 300px;
+}
+
+.buton {
+	
+	border-radius: 15%;
+	width: 90px;
+	padding: 7px;
+    background: E3E2D6;
+    float: right;
+    margin-right: 60px;
+    color: 1D4948;
+    font-size: 15px;  
+    font-weight:bold; 
+    
+}
+
+.title{
+	color:grey;
+	font-style: italic;
+	display: block
+	border-bottom-width: 1px;
+	border-bottom-color: #C0C0C0;
+	border-bottom-style: solid;
+	font-size : 17px;
+	text-align: left;
+	padding : 5px;		
+}
+
+.form{
+	font-style: italic;
+}
+
+
+.wrong{
+	color: red;
+	font-style: italic;
+	font-size: 15px;
+	
+}
+
+.newAccount { 
+	border-radius: 15%;
+    color: 1D4948;
+    font-size: 10px;  
+    font-weight:bold; 
+    margin-left: 230px;	
+}
+
+.resetPassword { 
+	border-radius: 15%;
+    color: 1D4948;
+    font-size: 10px;  
+    font-weight:bold; 
+    margin-left: 300px;
+      	
+}
+
+
