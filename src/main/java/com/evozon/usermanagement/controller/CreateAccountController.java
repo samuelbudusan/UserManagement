@@ -31,10 +31,8 @@ public class CreateAccountController {
 	
 	@RequestMapping(value = "/newAccount", method = RequestMethod.GET)
 	 public String newAccount(Model model) {
-	  
 	  User user=new User();
 	  model.addAttribute("user",user);
-	  
 	  return "newAccount";
 	 }
 	

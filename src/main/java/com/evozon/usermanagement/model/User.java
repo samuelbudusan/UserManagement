@@ -181,10 +181,17 @@ public class User  {
 		return true;
 	}
 	
-	@Override
+	/*@Override
 	public String toString(){
 		return userName + "," + email + "," + new SimpleDateFormat("dd/MM/yyyy").format(birthdate) + "," +
 				phone + "," + firstName + "," + lastName + "," + password + ","+ enabled + "\n";
-	}
-	
+	}*/
+
+    @Override
+    public String toString() {
+        return userName;
+    }
+
+
+
 }

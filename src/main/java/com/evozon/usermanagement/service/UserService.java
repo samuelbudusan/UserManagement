@@ -3,6 +3,7 @@ package com.evozon.usermanagement.service;
 import com.evozon.usermanagement.model.Group;
 import com.evozon.usermanagement.model.UserRole;
 import com.evozon.usermanagement.model.User;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 

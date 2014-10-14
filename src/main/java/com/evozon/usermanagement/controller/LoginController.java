@@ -1,6 +1,8 @@
 package com.evozon.usermanagement.controller;
 
+import com.evozon.usermanagement.model.Group;
 import com.evozon.usermanagement.model.User;
+import com.evozon.usermanagement.service.GroupService;
 import com.evozon.usermanagement.service.UserService;
 import com.evozon.usermanagement.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +17,17 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
 @SessionAttributes({"user"})
 public class LoginController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String forTest() {
-        return "redirect:/login";
-    }
+    @Autowired
+    GroupService groupService;
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = { "/login", "/"}, method = RequestMethod.GET)
 	public String Login(@RequestParam(required = false) Boolean successfulAccount, Model model) {
 		model.addAttribute("successfulAccount", successfulAccount);
 		return "login";
@@ -40,16 +41,27 @@ public class LoginController {
     }
 
     @PreAuthorize("hasRole('common')")
-    @RequestMapping(value = "success", method = RequestMethod.GET)
+    @RequestMapping(value = "/success", method = RequestMethod.GET)
     public String requestSuccessPage(@RequestParam(required = false) Integer isOk, Model model, HttpServletRequest request){
+
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
         model.addAttribute("userName", user.getUserName());
         model.addAttribute("isOk", isOk);
-        if( UserUtil.isAdmin(user) == true ) {
+        if(UserUtil.isAdmin(user)) {
             model.addAttribute("isAdmin", 1);
         }
+
+        List<Group> groupList = groupService.getAllGroups();
+        model.addAttribute("groupList", groupList);
         return "success";
+    }
+
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accessDenied(Model model) {
+        model.addAttribute("httpStatusMessage", "HTTP Status 403 - Access is denied");
+        model.addAttribute("msg","You do not have permission to access this resources!");
+        return "accessDenied";
     }
 }

@@ -34,7 +34,7 @@ public class HibernateDAO implements UserDAO {
 
     @Override
     public List<User> getAllUsers() {
-        return sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole left join fetch UserRole.userPermission left join fetch u.groups g left join fetch g.users ").list();
+        return (List<User>) sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole left join fetch UserRole.userPermission left join fetch u.groups g left join fetch g.users ").list();
     }
 
     public List<Group> getAllGroups() {
@@ -57,11 +57,18 @@ public class HibernateDAO implements UserDAO {
         String sql = "INSERT INTO user(username,email, birthday, phone, firstName, lastName, password, enabled)" +
                 "VALUES('" + user.getUserName() + "','" + user.getEmail() + "','" + sdf.format(user.getBirthdate()) + "','" + user.getPhone() + "','" + user.getFirstName() + "','" + user.getLastName() +
                 "','" + user.getPassword() + "'," + user.getEnabled() + ")";
-
-        Query query = s.createSQLQuery(sql);
-        query.executeUpdate();
-        s.getTransaction().commit();
-        s.flush();
+        Transaction tx = null;
+        try {
+            tx = s.beginTransaction();
+            s.createSQLQuery(sql).executeUpdate();
+            if (!tx.wasCommitted()) {
+                tx.commit();
+            }
+        } catch (Exception exp) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        }
     }
 
     public void addGroup(Group group) {
@@ -105,16 +112,25 @@ public class HibernateDAO implements UserDAO {
         return simpleUsersList;
     }
 
-    @SuppressWarnings("unchecked")
+   // @SuppressWarnings("unchecked")
     public Group fingGroupByName(String groupName) {
-        Group group = (Group) sessionFactory.getCurrentSession().createQuery("select distinct g from Group g left join fetch g.users User left join fetch User.userRole UserRole left join fetch UserRole.userPermission left join fetch User.groups where g.groupName='" + groupName + "'").list().get(0);
-        return group;
+        List<Group> groups = sessionFactory.getCurrentSession().createQuery("select distinct g from Group g left join fetch g.users User left join fetch User.userRole UserRole left join fetch UserRole.userPermission left join fetch User.groups where g.groupName='" + groupName + "'").list();
+        if(groups.size() > 0) {
+            return (Group) groups.get(0);
+        }
+        return null;
     }
 
-    @SuppressWarnings("unchecked")
+   // @SuppressWarnings("unchecked")
     public User findByUserName(String username) {
-        User user = (User) sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole left join fetch UserRole.userPermission left join fetch u.groups g  where u.userName='" + username + "'").list().get(0);
-        return user;
+        List<User> users = sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole left join fetch UserRole.userPermission left join fetch u.groups g where u.userName='" + username + "'").list();
+         //users = sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole left join fetch UserRole.userPermission left join fetch u.groups g where u.userName='" + username + "'").list();
+       // users = sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole left join fetch u.groups g where u.userName='" + username + "'").list();
+       // users = sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole where u.userName='" + username + "'").list();
+        if(users.size() > 0) {
+            return (User) users.get(0);
+        }
+        return null;
     }
 
     public void addUserToGroup(String username, String groupName) {
@@ -134,6 +150,23 @@ public class HibernateDAO implements UserDAO {
         }
     }
 
+    public void removeUserFromGroup(String username, String groupName) {
+        String sql = "DELETE FROM user_group WHERE username='" + username + "' and groupname='" + groupName + "'";
+        Session s = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        try {
+            tx = s.beginTransaction();
+            s.createSQLQuery(sql).executeUpdate();
+            if (!tx.wasCommitted()) {
+                tx.commit();
+            }
+        } catch (Exception exp) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        }
+
+    }
     public void removeRole(UserRole role) {
         Session s = sessionFactory.getCurrentSession();
         Transaction tx = s.beginTransaction();
@@ -150,4 +183,6 @@ public class HibernateDAO implements UserDAO {
         tx.commit();
         s.flush();
     }
+
+
 }

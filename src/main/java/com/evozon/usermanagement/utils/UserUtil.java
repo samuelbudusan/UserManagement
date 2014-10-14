@@ -54,7 +54,6 @@ public final class UserUtil {
         return true;
     }
 
-    //verifica daca un camp este gol
     public static boolean validateEmptyField(String field){
         if (field.equals("")) {
             return false;
@@ -62,8 +61,6 @@ public final class UserUtil {
         return true;
     }
 
-    //verifica daca email-ul contine @ sau nu
-    //returneaza true daca totul e in regulsa si fals altfel
     public static boolean validateEmail(String email) {
         if (email.contains("@")) {
             return true;

@@ -7,6 +7,7 @@ import com.evozon.usermanagement.model.User;
 import com.evozon.usermanagement.model.UserRole;
 import com.evozon.usermanagement.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -34,10 +35,9 @@ public class UserServiceImpl implements  UserService {
     public User loadUserByEmail(String email) {
         List<User> list = dao.getAllUsers();
 
-        for(User dest : list ) {
-            if(email.equals(dest.getEmail())) {
+        for (User dest : list) {
+            if (email.equals(dest.getEmail())) {
                 return dest;
-
             }
         }
         return null;
@@ -49,18 +49,17 @@ public class UserServiceImpl implements  UserService {
 
     public void changeRole(User user, String groupName, String moderator) {
 
-        UserRole role = new UserRole(user,"ROLE_MODERATOR",groupName);
-        if( moderator.equals("true")) {
+        UserRole role = new UserRole(user, "ROLE_MODERATOR", groupName);
+        if (moderator.equals("true")) {
             dao.addRole(role);
             Set<Permission> permissions = UserUtil.createPermissionList(role);
             dao.addPermissions(permissions);
 
-        } else
-        if(moderator.equals("false")) {
-            for( UserRole userRole : user.getUserRole()) {
-                if(userRole.getRole().equals("ROLE_MODERATOR")) {
-                    if(userRole.getGroupName().equals(groupName)) {
-                        for(Permission permission : userRole.getUserPermission()) {
+        } else if (moderator.equals("false")) {
+            for (UserRole userRole : user.getUserRole()) {
+                if (userRole.getRole().equals("ROLE_MODERATOR")) {
+                    if (userRole.getGroupName().equals(groupName)) {
+                        for (Permission permission : userRole.getUserPermission()) {
                             dao.removePermission(permission);
                         }
                         dao.removeRole(userRole);

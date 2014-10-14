@@ -57,7 +57,6 @@ public class EditUsersController {
         session.setAttribute("currentPassword", simpleUser.getPassword());
         model.addAttribute("simpleUser", simpleUser);
         return "editUserByAdmin";
-
     }
 
     @RequestMapping(value ="/editUserByAdmin", method = RequestMethod.POST)

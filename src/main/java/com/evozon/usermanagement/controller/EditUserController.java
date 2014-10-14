@@ -21,7 +21,7 @@ import java.util.Date;
 @SessionAttributes({"user"})
 public class EditUserController {
 
-	@Autowired
+    @Autowired
     EditUserService service;
 
     @Autowired
@@ -39,8 +39,7 @@ public class EditUserController {
 	public String getEditForm(Model model, HttpSession session) {
         User user = (User)session.getAttribute("user");
 		model.addAttribute("destUser", user);
-		
-		return "edit";	
+		return "edit";
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)

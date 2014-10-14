@@ -96,15 +96,29 @@
     </tx:advice>
 
     <!-- Spring security -->
-    <security:global-method-security pre-post-annotations="enabled"/>
     <security:http auto-config="true" use-expressions="true">
         <security:form-login login-page="/login" default-target-url="/success"
                              authentication-failure-url="/loginError"/>
+        <security:access-denied-handler ref="accessDeniedHandler" />
         <security:logout logout-success-url="/login?logout" />
     </security:http>
+
+   <security:global-method-security  pre-post-annotations="enabled" secured-annotations="enabled">
+        <security:expression-handler ref="expressionHandler"/>
+    </security:global-method-security>
 
     <security:authentication-manager >
         <security:authentication-provider ref="customAuthenticationProvider" />
     </security:authentication-manager>
+
+    <beans:bean id="expressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+        <beans:property name="permissionEvaluator">
+            <beans:bean id="permissionEvaluator" class="com.evozon.usermanagement.utils.CustomPermissionEvaluator"/>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="accessDeniedHandler"  class="com.evozon.usermanagement.utils.CustomAccessDeniedHandler">
+        <beans:property name="errorPage" value="403" />
+    </beans:bean>
 
 </beans:beans>

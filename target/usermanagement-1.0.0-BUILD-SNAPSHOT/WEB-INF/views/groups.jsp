@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page session="false"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page session="false" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -9,8 +9,10 @@
 </head>
 <body>
 <p>Groups:</p>
+
 <div class="div">
     <h1 class="title">Groups Management</h1>
+
     <div id="table_wrapper">
         <table class="table1">
             <tr>
@@ -42,7 +44,7 @@
 
 <script>
     function myFunction(x) {
-        var str = "/editGroup?index="+x.rowIndex;
+        var str = "/editGroup?index=" + x.rowIndex;
         window.location = str;
     }
 </script>

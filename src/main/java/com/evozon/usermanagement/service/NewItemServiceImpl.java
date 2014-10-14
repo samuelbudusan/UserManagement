@@ -46,7 +46,6 @@ public class NewItemServiceImpl implements NewItemService {
 		} else {
 			errors = "The given username is already in use,";
 		}
-		
 		return errors;
 	}
 

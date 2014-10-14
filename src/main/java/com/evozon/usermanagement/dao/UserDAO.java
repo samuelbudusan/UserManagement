@@ -23,4 +23,5 @@ public interface UserDAO {
     public void addUserToGroup(String username, String groupName);
     public void removeRole(UserRole role);
     public void removePermission(Permission permission);
+    public void removeUserFromGroup(String username, String groupName);
 }

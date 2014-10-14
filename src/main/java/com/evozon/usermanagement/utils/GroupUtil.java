@@ -35,4 +35,13 @@ public final class GroupUtil {
         }
         return -1;
     }
+
+    public static boolean isMemberOfGroup(Group group, String userName) {
+        for(User user :group.getUsers()) {
+            if(user.getUserName().equals(userName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

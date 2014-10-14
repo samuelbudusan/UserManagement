@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +85,7 @@ public class GroupsController {
     public String addUserToGroup(@ModelAttribute UserList list){
         Integer index = GroupUtil.getIndexOfGroup(groupService.getAllGroups(),list.getGroupName());
         groupService.addUsersToGroup(list.getUsers(),list.getGroupName());
+
         return "redirect:/editGroup?index="+index;
     }
 
@@ -112,4 +114,28 @@ public class GroupsController {
         return "redirect:/editGroup?index="+session.getAttribute("currentGroup");
     }
 
+    @PreAuthorize("hasRole('groupsManagement')")
+    @RequestMapping(value="/removeUserFromGroup", method = RequestMethod.GET)
+    public String removeUserFromGroup(HttpServletRequest request, HttpSession session) {
+        String userName = (String) session.getAttribute("currentUserName");
+        User user = userService.loadUserByUsername(userName);
+        Group group = groupService.getAllGroups().get((Integer) session.getAttribute("currentGroup"));
+        groupService.removeUserFromGroup(user,group.getGroupName());
+        return "redirect:/editGroup?index="+session.getAttribute("currentGroup");
+    }
+
+    @PreAuthorize("hasRole('common')")
+    @RequestMapping(value="/getGroup", method = RequestMethod.GET)
+    public String getGroup(HttpServletRequest request, Model model,Principal principal) {
+        Integer index = Integer.parseInt((String) request.getParameter("index"));
+        Group group = groupService.getAllGroups().get(index);
+        groupService.enterGroup(group); // check access
+
+        model.addAttribute("group", group);
+        boolean isModerator = UserUtil.isModerator(userService.loadUserByUsername(principal.getName()) ,group.getGroupName());
+        model.addAttribute("isModerator",isModerator);
+        boolean isAdmin = UserUtil.isAdmin(userService.loadUserByUsername(principal.getName()));
+        model.addAttribute("isAdmin",isAdmin);
+        return "enterGroup";
+    }
 }

@@ -38,9 +38,40 @@
 
 </c:choose>
 
+<div class="div">
+    <h1 class="title">Groups</h1>
+
+    <div id="table_wrapper">
+        <table class="table1">
+            <tr>
+                <td class="t1">Group Name</td>
+            </tr>
+        </table>
+        <div id="tbody">
+            <table class="table2">
+                <c:forEach var="i" begin="1" end="5">
+                    <c:forEach items="${groupList}" var="group">
+                        <tr onclick="myFunction(this)">
+                            <td class="td1">${group.groupName}</td>
+                        </tr>
+                    </c:forEach>
+                </c:forEach>
+            </table>
+        </div>
+    </div>
+</div>
+
 <c:if test="${isAdmin == 1}">
     <h1 id="groups"><a href="/groupsManagement" style="color:black">Groups Management</a></h1>
 </c:if>
+
+<script>
+    function myFunction(x) {
+        var str = "/getGroup?index=" + x.rowIndex;
+        window.location = str;
+    }
+</script>
+
 </body>
 </html>
 

@@ -5,35 +5,45 @@
 <html>
 <head>
     <title>Change role</title>
+    <link rel="stylesheet" type="text/css"
+          href="resources/changeRole.css">
 </head>
 <body>
-<p>User : ${user.userName}</p>
 
-<c:choose>
-    <c:when test="${isModerator}">
-        <p>Role: MODERATOR </p>
-    </c:when>
-    <c:otherwise>
-        <p>Role: USER </p>
-    </c:otherwise>
-</c:choose>
+<div class="div">
+    <h1 class="title">User Group&Role</h1>
 
-<button id="cancel" class="butons" type="button">Cancel</button>
+    <p class="p">User : ${user.userName}</p>
 
+    <c:choose>
+        <c:when test="${isModerator}">
+            <p class="p">Role: MODERATOR </p>
+        </c:when>
+        <c:otherwise>
+            <p class="p">Role: USER </p>
+        </c:otherwise>
+    </c:choose>
 
-<c:choose>
-    <c:when test="${isModerator}">
-        <a href="/addOrRemoveRole?moderator=false">
-            <button class="butons" type="button">Remove Moderator Role</button>
-        </a>
-    </c:when>
-    <c:when test="${!isModerator}">
-        <a href="/addOrRemoveRole?moderator=true">
-            <button class="butons" type="button">Add Moderator Role</button>
-        </a>
-    </c:when>
-</c:choose>
+    <c:choose>
+        <c:when test="${isModerator}">
+            <a href="/addOrRemoveRole?moderator=false">
+                <button class="butons" type="button">Remove Moderator Role</button>
+            </a>
+        </c:when>
+        <c:when test="${!isModerator}">
+            <a href="/addOrRemoveRole?moderator=true">
+                <button class="butons" type="button">Add Moderator Role</button>
+            </a>
+        </c:when>
+    </c:choose>
 
+    <a href="/removeUserFromGroup">
+        <button class="butons" type="button">Remove User From Group</button>
+    </a>
+
+    <button id="cancel" class="butons" type="button">Cancel</button>
+
+</div>
 <script>
     document.getElementById("cancel").onclick = function () {
         window.history.back();

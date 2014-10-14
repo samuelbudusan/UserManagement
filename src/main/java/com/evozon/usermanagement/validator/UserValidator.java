@@ -11,7 +11,7 @@ import com.evozon.usermanagement.model.User;
 @Component
 public class UserValidator implements Validator<User> {
 
-	private StringBuffer errors = new StringBuffer(); //""
+	private StringBuffer errors = new StringBuffer();
 
 	@Override
 	public String validate(User user) {
