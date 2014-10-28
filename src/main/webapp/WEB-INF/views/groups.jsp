@@ -8,8 +8,6 @@
     <title>Groups Management</title>
 </head>
 <body>
-<p>Groups:</p>
-
 <div class="div">
     <h1 class="title">Groups Management</h1>
 
@@ -40,7 +38,6 @@
         <button class="butons" type="button">New Group</button>
     </a>
 </div>
-
 
 <script>
     function myFunction(x) {

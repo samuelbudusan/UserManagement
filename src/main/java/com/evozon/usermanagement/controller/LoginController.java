@@ -4,6 +4,7 @@ import com.evozon.usermanagement.model.Group;
 import com.evozon.usermanagement.model.User;
 import com.evozon.usermanagement.service.GroupService;
 import com.evozon.usermanagement.service.UserService;
+import com.evozon.usermanagement.utils.Memory;
 import com.evozon.usermanagement.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import scala.Boolean;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,7 +29,7 @@ public class LoginController {
     @Autowired
     GroupService groupService;
 
-	@RequestMapping(value = { "/login", "/"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String Login(@RequestParam(required = false) Boolean successfulAccount, Model model) {
 		model.addAttribute("successfulAccount", successfulAccount);
 		return "login";

@@ -9,5 +9,6 @@
         <mapping class="com.evozon.usermanagement.model.UserRole" />
         <mapping class="com.evozon.usermanagement.model.Permission" />
         <mapping class="com.evozon.usermanagement.model.Group" />
-    </session-factory>         
+        <mapping class="com.evozon.usermanagement.model.Node" />
+    </session-factory>
 </hibernate-configuration>

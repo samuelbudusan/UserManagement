@@ -58,7 +58,7 @@ public class GroupServiceImpl implements GroupService {
         dao.removeUserFromGroup(user.getUserName(),groupName);
     }
 
-    @PreAuthorize("hasRole('groupAccess') and hasPermission(#group, 'groupAccess')")
+    @PreAuthorize("hasAnyRole('groupAccess', 'groupsManagement') and hasPermission(#group, 'groupAccess')")
     public boolean enterGroup(Group group){
         return true;
     }

@@ -52,7 +52,7 @@
                 <c:forEach var="i" begin="1" end="5">
                     <c:forEach items="${groupList}" var="group">
                         <tr onclick="myFunction(this)">
-                            <td class="td1">${group.groupName}</td>
+                            <td class="td1"> <img src="resources/images/group_icon1.png" height=20px;> ${group.groupName}</td>
                         </tr>
                     </c:forEach>
                 </c:forEach>
@@ -63,6 +63,7 @@
 
 <c:if test="${isAdmin == 1}">
     <h1 id="groups"><a href="/groupsManagement" style="color:black">Groups Management</a></h1>
+    <h1 id="groups"><a href="/fileSystem?node=root" style="color:black">File System Management</a></h1>
 </c:if>
 
 <script>
@@ -70,6 +71,7 @@
         var str = "/getGroup?index=" + x.rowIndex;
         window.location = str;
     }
+
 </script>
 
 </body>

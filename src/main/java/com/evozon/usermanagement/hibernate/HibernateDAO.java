@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.orm.hibernate3.SessionHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -82,10 +82,12 @@
     </beans:bean>
 
     <aop:config>
-        <aop:pointcut id="productServiceMethods"
-                      expression="execution(* com.evozon.usermanagement.hibernate.HibernateDAO.*(..))" />
+        <aop:pointcut id="productServiceMethods"  expression="execution(* com.evozon.usermanagement.hibernate.HibernateDAO.*(..))" />
+        <aop:pointcut id="productServiceMethodsFileSystem"  expression="execution(* com.evozon.usermanagement.hibernate.FileSystemDAOImpl.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="productServiceMethods" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="productServiceMethodsFileSystem" />
     </aop:config>
+
     <tx:advice id="txAdvice" transaction-manager="txManager">
         <tx:attributes>
             <tx:method name="add" propagation="REQUIRES_NEW" />
