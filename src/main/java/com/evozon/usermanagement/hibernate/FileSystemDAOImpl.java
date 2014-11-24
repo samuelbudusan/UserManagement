@@ -3,9 +3,15 @@ package com.evozon.usermanagement.hibernate;
 import com.evozon.usermanagement.dao.fileSystem.FileSystemDAO;
 import com.evozon.usermanagement.model.Node;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.hibernate.*;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -18,8 +24,15 @@ public class FileSystemDAOImpl implements FileSystemDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public List<Node> getAllNodes() {
-        return sessionFactory.getCurrentSession().createQuery("from Node").list();
+    public Node findNodeById(Integer nodeID) {
+      /*  Node node = (Node) sessionFactory.getCurrentSession().get(Node.class, nodeID);
+        return node;*/
+        List<Node> nodes = sessionFactory.getCurrentSession().createQuery("from Node n where n.nodeID=" + nodeID).list();
+        if(nodes.size() > 0) {
+            return (Node) nodes.get(0);
+        }
+        return null;
+
     }
 
     public void addNode(Node node) {
@@ -31,12 +44,6 @@ public class FileSystemDAOImpl implements FileSystemDAO {
         s.flush();
     }
 
-    @SuppressWarnings("unchecked")
-    public Node findNodeByName(String nodeName) {
-        Node node = (Node) sessionFactory.getCurrentSession().get(Node.class, nodeName);
-        return node;
-    }
-
     public void deleteNode(Node node) {
         Session s = sessionFactory.getCurrentSession();
         Transaction tx = s.beginTransaction();
@@ -45,8 +52,8 @@ public class FileSystemDAOImpl implements FileSystemDAO {
         s.flush();
     }
 
-    public void updateNodeName(String nodeName, String newName) {
-        String sql = "UPDATE node SET `name` = '"+ newName +"' WHERE `name` = '" + nodeName +"'";
+    public void updateNodeName(Integer nodeID, String newName) {
+        String sql = "UPDATE node SET `name` = '"+ newName +"' WHERE `nodeId` =" + nodeID;
         Session s = sessionFactory.getCurrentSession();
         Transaction tx = null;
         try {
@@ -62,8 +69,8 @@ public class FileSystemDAOImpl implements FileSystemDAO {
         }
     }
 
-    public void updateParrnetName(String nodeName, String parrentName) {
-        String sql = "UPDATE node SET `parent` = '"+ parrentName +"' WHERE `name` = '" + nodeName +"'";
+    public void updateParent(Integer nodeID, Integer parentID) {
+        String sql = "UPDATE node SET `parent` = '"+ parentID +"' WHERE `nodeId` =" + nodeID;
         Session s = sessionFactory.getCurrentSession();
         Transaction tx = null;
         try {

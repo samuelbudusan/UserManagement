@@ -1,5 +1,7 @@
 package com.evozon.usermanagement.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -80,6 +82,7 @@ public class UserRole {
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "userRole", targetEntity = Permission.class)
+    @Fetch(FetchMode.SUBSELECT)
     public Set<Permission> getUserPermission() {
         return userPermission;
     }

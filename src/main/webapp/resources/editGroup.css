@@ -21,10 +21,10 @@ body {
     border-radius: 15%;
     width: 130px;
     padding: 7px;
-    background: E3E2D6;
+    background: #E3E2D6;
     margin-left: 40px;
     margin-right: 40px;
-    color: 1D4948;
+    color: #1D4948;
     font-size: 14px;
     font-weight:bold;
 }
@@ -89,7 +89,7 @@ td {
     border: 5px solid grey;
     border-radius: 3%;
     margin: 200px auto;
-    background: C7C7C7 ;
+    background: #C7C7C7 ;
     text-align: center;
 }
 

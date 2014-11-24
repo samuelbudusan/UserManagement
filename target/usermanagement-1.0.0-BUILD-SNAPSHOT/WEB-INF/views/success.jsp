@@ -63,7 +63,7 @@
 
 <c:if test="${isAdmin == 1}">
     <h1 id="groups"><a href="/groupsManagement" style="color:black">Groups Management</a></h1>
-    <h1 id="groups"><a href="/fileSystem?node=root" style="color:black">File System Management</a></h1>
+    <h1 id="groups"><a href="/fileSystem?node=1" style="color:black">File System Management</a></h1>
 </c:if>
 
 <script>

@@ -33,11 +33,11 @@ public class HibernateDAO implements UserDAO {
 
     @Override
     public List<User> getAllUsers() {
-        return (List<User>) sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole left join fetch UserRole.userPermission left join fetch u.groups g left join fetch g.users ").list();
+        return (List<User>) sessionFactory.getCurrentSession().createQuery("from User").list();
     }
 
     public List<Group> getAllGroups() {
-        return sessionFactory.getCurrentSession().createQuery("select distinct g from Group g left join fetch g.users User left join fetch User.userRole UserRole left join fetch UserRole.userPermission left join fetch User.groups").list();
+        return sessionFactory.getCurrentSession().createQuery("from Group").list();
     }
 
     @Override
@@ -100,7 +100,7 @@ public class HibernateDAO implements UserDAO {
     }
 
     public List<User> getAllSimpleUsers() {
-        Iterator<User> usersIterator = sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole left join fetch UserRole.userPermission left join fetch u.groups g left join fetch g.users ").list().iterator();
+        Iterator<User> usersIterator = sessionFactory.getCurrentSession().createQuery("from User").list().iterator();
         List<User> simpleUsersList = new ArrayList<User>();
         while (usersIterator.hasNext()) {
             User user = (User) usersIterator.next();
@@ -111,21 +111,16 @@ public class HibernateDAO implements UserDAO {
         return simpleUsersList;
     }
 
-   // @SuppressWarnings("unchecked")
-    public Group fingGroupByName(String groupName) {
-        List<Group> groups = sessionFactory.getCurrentSession().createQuery("select distinct g from Group g left join fetch g.users User left join fetch User.userRole UserRole left join fetch UserRole.userPermission left join fetch User.groups where g.groupName='" + groupName + "'").list();
+    public Group findGroupByName(String groupName) {
+        List<Group> groups = sessionFactory.getCurrentSession().createQuery("from Group g where g.groupName='" + groupName + "'").list();
         if(groups.size() > 0) {
             return (Group) groups.get(0);
         }
         return null;
     }
 
-   // @SuppressWarnings("unchecked")
     public User findByUserName(String username) {
-        List<User> users = sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole left join fetch UserRole.userPermission left join fetch u.groups g where u.userName='" + username + "'").list();
-         //users = sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole left join fetch UserRole.userPermission left join fetch u.groups g where u.userName='" + username + "'").list();
-       // users = sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole left join fetch u.groups g where u.userName='" + username + "'").list();
-       // users = sessionFactory.getCurrentSession().createQuery("select distinct u from User u left join fetch u.userRole UserRole where u.userName='" + username + "'").list();
+        List<User> users = sessionFactory.getCurrentSession().createQuery("from User u where u.userName='" + username + "'").list();
         if(users.size() > 0) {
             return (User) users.get(0);
         }

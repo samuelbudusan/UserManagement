@@ -9,12 +9,12 @@ import java.util.List;
  */
 public interface FileSystemService {
 
-    public List<Node> getAllNodes();
     public String addNode(Node node);
-    public Node loadNodeByName(String nodeName);
-    public List<Node> getAllRootNodes();
     public void deleteNodes(String[] nodeList);
-    public void renameNode(String nodeName, String newName);
-    public void cutNodes(String[] nodeList);
+    public void renameNode(Integer nodeID, String newName);
+    public void addNodesToMemory(String[] nodeList,String operation);
+    public Node loadNodeById(Integer nodeID);
+    public void paste(Integer nodeID);
+    public String createJSON(Node node, String direction);
 
 }

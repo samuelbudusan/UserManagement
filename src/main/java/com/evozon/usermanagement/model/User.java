@@ -1,6 +1,8 @@
 package com.evozon.usermanagement.model;
 
 import com.evozon.usermanagement.utils.UserUtil;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -34,6 +36,7 @@ public class User  {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable( name = "user_group", catalog = "userdb", joinColumns = { @JoinColumn( name = "username")} , inverseJoinColumns = { @JoinColumn(name = "groupname")})
+    @Fetch(FetchMode.SUBSELECT)
     private Set<Group> groups = new HashSet<Group>();
 
     public Set<Group> getGroups() {
@@ -45,6 +48,7 @@ public class User  {
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @Fetch(FetchMode.SUBSELECT)
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
 
 	public User() {

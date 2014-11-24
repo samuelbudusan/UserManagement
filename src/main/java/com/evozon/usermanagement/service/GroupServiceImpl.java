@@ -29,7 +29,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Transactional
     public Group loadGroupByName(String groupName) {
-        return dao.fingGroupByName(groupName);
+        return dao.findGroupByName(groupName);
     }
 
     public void addUsersToGroup(List<String> users, String groupName) {

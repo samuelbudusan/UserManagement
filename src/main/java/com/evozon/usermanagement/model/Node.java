@@ -1,5 +1,8 @@
 package com.evozon.usermanagement.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -13,15 +16,20 @@ import java.util.Set;
 @Table(name="node", catalog="userdb")
 public class Node implements Serializable {
 
-    @Id
+
+    @Id @GeneratedValue
+    @Column(name = "nodeID")
+    private Integer nodeID;
+
     @Column(name = "name")
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "parent", referencedColumnName="name" ,nullable = true)
+    @JoinColumn(name = "parent", nullable = true)
     private Node parent;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
+    @Fetch(FetchMode.SUBSELECT)
     private Set<Node> nodeList = new HashSet<Node>();
 
     public Node() {
@@ -40,6 +48,14 @@ public class Node implements Serializable {
         this.name = groupName;
         this.parent = parent;
         this.nodeList = groupList;
+    }
+
+    public Integer getNodeID() {
+        return nodeID;
+    }
+
+    public void setNodeID(Integer nodeID) {
+        this.nodeID = nodeID;
     }
 
     public String getName() {
@@ -66,5 +82,17 @@ public class Node implements Serializable {
         this.nodeList = nodeList;
     }
 
-
+    @Override
+    public String toString() {
+        String currentParent = "";
+        if(parent == null ) return "";
+        if(parent.getNodeID() == 1) {
+            currentParent="#";
+        } else {
+            currentParent = ""+this.parent.getNodeID();
+        }
+        return  "{ 'id' : '" + nodeID +
+                "' , 'parent' : '" + currentParent +
+                "' , 'text' : '" + name +"' }";
+    }
 }

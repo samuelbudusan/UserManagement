@@ -1,5 +1,8 @@
 package com.evozon.usermanagement.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +19,7 @@ public class Group {
     private String groupName;
 
     @ManyToMany( fetch = FetchType.EAGER, mappedBy = "groups")
+    @Fetch(FetchMode.SUBSELECT)
     private Set<User> users = new HashSet<User>(0);
 
     public Group() {

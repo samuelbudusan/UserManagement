@@ -18,7 +18,7 @@ public interface UserDAO {
     public void addPermissions(Set<Permission> permissions);
     public List<User> getAllSimpleUsers();
     public User findByUserName(String username);
-    public Group fingGroupByName(String groupName);
+    public Group findGroupByName(String groupName);
     public void addGroup(Group group);
     public void addUserToGroup(String username, String groupName);
     public void removeRole(UserRole role);

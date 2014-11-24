@@ -29,10 +29,10 @@ input {
 	border-radius: 15%;
 	width: 90px;
 	padding: 7px;
-    background: E3E2D6;
+    background: #E3E2D6;
     float: right;
     margin-right: 60px;
-    color: 1D4948;
+    color: #1D4948;
     font-size: 15px;  
     font-weight:bold; 
     
@@ -64,7 +64,7 @@ input {
 
 .newAccount { 
 	border-radius: 15%;
-    color: 1D4948;
+    color: #1D4948;
     font-size: 10px;  
     font-weight:bold; 
     margin-left: 230px;	
@@ -72,7 +72,7 @@ input {
 
 .resetPassword { 
 	border-radius: 15%;
-    color: 1D4948;
+    color: #1D4948;
     font-size: 10px;  
     font-weight:bold; 
     margin-left: 300px;
